@@ -10,6 +10,8 @@ pipeline {
         stage('Setup') {
             steps {
                 script {
+                    // Try to remove existing .env first (fixes permission issues if owned by root)
+                    sh 'rm -f .env'
                     // Copy the secret file content to .env in the workspace
                     // This ensures docker-compose can find it
                     sh 'cp $DOTENV .env'
