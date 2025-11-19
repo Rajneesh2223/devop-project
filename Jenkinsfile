@@ -35,5 +35,14 @@ pipeline {
                 }
             }
         }
+
+        stage('Deploy') {
+            steps {
+                script {
+                    // Run the containers in detached mode
+                    sh 'docker-compose up -d'
+                }
+            }
+        }
     }
 }
