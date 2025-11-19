@@ -62,7 +62,13 @@ The `.env` file is not tracked in git for security. You must inject it using Jen
 
 ### Accessing the Application
 The pipeline now includes a **Deploy** stage that runs `docker-compose up -d`.
-- **Client**: `http://<JENKINS_SERVER_IP>:3000`
-- **Server**: `http://<JENKINS_SERVER_IP>:5000`
 
-*If Jenkins is running on your local machine, use `localhost`.*
+**1. If Jenkins is on your Local Machine:**
+- **Client**: `http://localhost:3000`
+- **Server**: `http://localhost:5000`
+
+**2. If Jenkins is on a Cloud Server (AWS, Azure, etc.):**
+- **Client**: `http://<YOUR_SERVER_PUBLIC_IP>:3000`
+- **Server**: `http://<YOUR_SERVER_PUBLIC_IP>:5000`
+
+> **Important:** Ensure ports **3000** and **5000** are open in your firewall or Security Group (AWS/Azure) settings.
