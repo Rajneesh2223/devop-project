@@ -72,3 +72,8 @@ The pipeline now includes a **Deploy** stage that runs `docker-compose up -d`.
 - **Server**: `http://<YOUR_SERVER_PUBLIC_IP>:5000`
 
 > **Important:** Ensure ports **3000** and **5000** are open in your firewall or Security Group (AWS/Azure) settings.
+
+### Automating Builds
+To trigger builds automatically on push:
+1.  **Jenkins**: Enable "GitHub hook trigger for GITScm polling" in the job configuration.
+2.  **GitHub**: Add a Webhook pointing to `http://<JENKINS_IP>:8080/github-webhook/`.
