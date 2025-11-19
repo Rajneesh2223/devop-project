@@ -2,10 +2,21 @@ pipeline {
     agent any
     
     environment {
-        // Define environment variables if needed
+        // "my-env-file" is the ID you will create in Jenkins
+        DOTENV = credentials('my-env-file') 
     }
 
     stages {
+        stage('Setup') {
+            steps {
+                script {
+                    // Copy the secret file content to .env in the workspace
+                    // This ensures docker-compose can find it
+                    sh 'cp $DOTENV .env'
+                }
+            }
+        }
+
         stage('Build') {
             steps {
                 script {
@@ -24,7 +35,5 @@ pipeline {
                 }
             }
         }
-        
-        // Add more stages as needed
     }
 }
