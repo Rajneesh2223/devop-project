@@ -73,7 +73,26 @@ The pipeline now includes a **Deploy** stage that runs `docker-compose up -d`.
 
 > **Important:** Ensure ports **3000** and **5000** are open in your firewall or Security Group (AWS/Azure) settings.
 
-### Automating Builds
-To trigger builds automatically on push:
-1.  **Jenkins**: Enable "GitHub hook trigger for GITScm polling" in the job configuration.
-2.  **GitHub**: Add a Webhook pointing to `http://<JENKINS_IP>:8080/github-webhook/`.
+### Automating Builds (GitHub Webhook)
+
+To trigger builds automatically on push, you need to connect GitHub to Jenkins.
+
+#### ⚠️ Critical Warning for Localhost
+If Jenkins is running on your laptop (`localhost`), **GitHub cannot see it**.
+- **Solution**: Use **ngrok** to create a public URL (e.g., `https://random.ngrok.io`).
+- **Cloud Servers**: If on AWS/Azure, just use your Public IP.
+
+#### Step 1: Configure Jenkins
+1.  Go to your Job > **Configure**.
+2.  Under **Build Triggers**, check **"GitHub hook trigger for GITScm polling"**.
+3.  Click **Save**.
+
+#### Step 2: Configure GitHub
+1.  Go to your Repo > **Settings** > **Webhooks**.
+2.  Click **Add webhook**.
+3.  **Payload URL**: `http://<YOUR_JENKINS_URL>:8080/github-webhook/`
+    *   *Cloud Example*: `http://123.45.67.89:8080/github-webhook/`
+    *   *Ngrok Example*: `https://random.ngrok.io/github-webhook/`
+4.  **Content type**: `application/json`.
+5.  **Events**: Select **"Just the push event"**.
+6.  Click **Add webhook**.
