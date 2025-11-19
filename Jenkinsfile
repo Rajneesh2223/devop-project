@@ -41,6 +41,10 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
+                    // Stop any existing containers to free up ports
+                    // '|| true' ensures the build doesn't fail if no containers are running
+                    sh 'docker-compose down || true'
+                    
                     // Run the containers in detached mode
                     sh 'docker-compose up -d'
                 }
